@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app.js';
 import { expect } from 'chai';
-import * as sinon from 'sinon';
+import {stub, restore} from 'sinon';
 import authService from '../../src/services/auth.service.js';
 
 describe('POST /api/auth/login', () => {
@@ -31,7 +31,7 @@ describe('POST /api/auth/login', () => {
   });
 
   it('deve retornar 500 quando acontecer algum problema de conexão com banco de dados', async () => {
-    const authServiceMock = sinon.stub(authService, 'login');
+    const authServiceMock = stub(authService, 'login');
     authServiceMock.throws(new Error('ERROR - ERROR - ERROR -ERROR - ERROR'));
 
     const loginResposta = await request(app)
@@ -44,6 +44,8 @@ describe('POST /api/auth/login', () => {
     expect(loginResposta.status).to.equal(500);
     expect(loginResposta.body.error).to.equal('Erro interno do servidor.');
 
-    sinon.restore();
+    restore();
+
   });
+
 });
