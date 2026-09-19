@@ -64,9 +64,9 @@ describe('Testes de Disciplinas', () => {
             .set('Content-type', 'application/json')
             .set('Authorization', `Bearer ${token}`)
             .send({
-                nome: 'Ana Souza',
-                email: 'ana.medeiros@example.com',
-                matricula: '2024029',
+                nome: 'Maria Teresinha',
+                email: 'maria.teresinha@example.com',
+                matricula: '2024086',
                 senha: '123456'
             });      
         const alunoId = cadastrarAlunoResposta.body.id;        
@@ -77,8 +77,8 @@ describe('Testes de Disciplinas', () => {
               .set('Content-type', 'application/json')
               .set('Authorization', `Bearer ${token}`)
               .send({
-                nome: "Algebra Linear 2",
-                codigo: "ALL667",
+                nome: "Algebra Linear 9",
+                codigo: "ALL669",
                 cargaHoraria: 40
                 });
         const disciplinaId = cadastrarDisciplinaResposta.body.id;
