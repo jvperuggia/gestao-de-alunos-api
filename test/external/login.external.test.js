@@ -11,7 +11,7 @@ describe('POST /api/auth/login', () => {
   // });
 
   it('deve retornar 200 e um token quando o admin informar e-mail e senha corretos', async () => {
-    const resposta = await request('http://localhost:3000')
+    const resposta = await api()
       .post('/api/auth/login')
       .send({ email: 'admin@escola.com', senha: 'admin123' });
 
@@ -20,7 +20,7 @@ describe('POST /api/auth/login', () => {
   });
 
   it('deve retornar 401 quando a senha informada for inválida', async () => {
-    const resposta = await request('http://localhost:3000')
+    const resposta = await api()
       .post('/api/auth/login')
       .send({ email: 'admin@escola.com', senha: 'senha-incorreta' });
 
@@ -32,7 +32,7 @@ describe('POST /api/auth/login', () => {
     const authServiceMock = sinon.stub(authService, 'login');
     authServiceMock.throws(new Error('ERROR - ERROR - ERROR -ERROR - ERROR'));
 
-    const loginResposta = await request('http://localhost:3000')
+    const loginResposta = await api()
       .post('/api/auth/login')
       .set('Content-type', 'application/json')
       .send({ 

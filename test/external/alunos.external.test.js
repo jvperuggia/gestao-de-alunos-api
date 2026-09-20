@@ -14,7 +14,7 @@ describe('POST /api/auth/login', () => {
     it('Deve cadastrar um aluno quando informar dados válidos', async () => {
           
         //cadastrar aluno
-        const CadastroAlunoResposta = await request('http://localhost:3000')
+        const CadastroAlunoResposta = await api()
               .post('/api/admin/alunos')
               .set('Content-type', 'application/json')
               .set('Authorization', `Bearer ${token}`)
@@ -36,7 +36,7 @@ describe('POST /api/auth/login', () => {
     it('Deve negar o cadastro de um aluno quando informar dados de aluno já cadastrado', async () => {
         
         //tentar cadastrar aluno ja existente
-        const CadastroAlunoResposta = await request('http://localhost:3000')
+        const CadastroAlunoResposta = await api()
               .post('/api/admin/alunos')
               .set('Content-type', 'application/json')
               .set('Authorization', `Bearer ${token}`)
@@ -56,7 +56,7 @@ describe('POST /api/auth/login', () => {
     it('Deve consultar um aluno cadastrado', async () => {
           
         //consultar aluno
-        const consultarAlunoResposta = await request('http://localhost:3000')
+        const consultarAlunoResposta = await api()
               .get('/api/admin/alunos/aluno-bruno-lima')
               .set('Content-type', 'application/json')
               .set('Authorization', `Bearer ${token}`)
@@ -75,7 +75,7 @@ describe('POST /api/auth/login', () => {
     it('Consultar um aluno não cadastrado', async () => {
           
         //consultar aluno nãao cadastrado
-        const consultarAlunoResposta = await request('http://localhost:3000')
+        const consultarAlunoResposta = await api()
               .get('/api/admin/alunos/id-nao-cadastrado')
               .set('Content-type', 'application/json')
               .set('Authorization', `Bearer ${token}`)
