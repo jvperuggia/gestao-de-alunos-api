@@ -1,6 +1,8 @@
 import {api} from '../helpers/api.js';
 import { expect } from 'chai';
 import { comTokenDeAdmin } from '../helpers/auth.js';
+import { novoAluno } from '../factories/alunosFactory.js';  
+import { novaDisciplina } from '../factories/disciplinasFactory.js';
 
 
 describe('Testes de Disciplinas', () => {
@@ -12,11 +14,7 @@ describe('Testes de Disciplinas', () => {
               .post('/api/admin/disciplinas')
               .set('Content-type', 'application/json')
               .set('Authorization', await comTokenDeAdmin())
-              .send({
-                nome: "Algebra Linear",
-                codigo: "ALL666",
-                cargaHoraria: 70
-                });
+              .send(novaDisciplina());
               
         //validar que disciplina foi cadastrado
          expect(cadastrarDisciplinaResposta.status).to.equal(201); 
@@ -57,26 +55,17 @@ describe('Testes de Disciplinas', () => {
             .post('/api/admin/alunos')
             .set('Content-type', 'application/json')
             .set('Authorization', await comTokenDeAdmin())
-            .send({
-                nome: 'Felipe Pensis',
-                email: 'felipe.pensis@example.com',
-                matricula: '2024091',
-                senha: '123456'
-            });      
-        const alunoId = cadastrarAlunoResposta.body.id;        
+            .send(novoAluno());      
+        const alunoId = cadastrarAlunoResposta.body.id;     
               
          //Cadastrar disciplina
         const cadastrarDisciplinaResposta = await api()
               .post('/api/admin/disciplinas')
               .set('Content-type', 'application/json')
               .set('Authorization', await comTokenDeAdmin())
-              .send({
-                nome: "Desenho Industrial",
-                codigo: "DESIN1",
-                cargaHoraria: 40
-                });
+              .send(novaDisciplina());
         const disciplinaId = cadastrarDisciplinaResposta.body.id;
-        
+
         // Matricular aluno em disciplina
         const matricularAlunoEmDisciplinaResposta = await api()
               .post(`/api/admin/disciplinas/${disciplinaId}/matriculas`)
@@ -88,7 +77,7 @@ describe('Testes de Disciplinas', () => {
 
         expect(matricularAlunoEmDisciplinaResposta.status).to.equal(201);
         expect(matricularAlunoEmDisciplinaResposta.body.alunoId).to.equal(alunoId);
-        expect(matricularAlunoEmDisciplinaResposta.body.disciplinaId).to.equal(disciplinaId);        
+        expect(matricularAlunoEmDisciplinaResposta.body.disciplinaId).to.equal(disciplinaId);
 
     });
 
