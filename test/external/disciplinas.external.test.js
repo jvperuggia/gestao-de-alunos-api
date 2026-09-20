@@ -1,23 +1,17 @@
-import request from 'supertest';
+import {api} from '../helpers/api.js';
 import { expect } from 'chai';
-import { getToken } from '../helpers/auth.js';
+import { comTokenDeAdmin } from '../helpers/auth.js';
 
 
 describe('Testes de Disciplinas', () => {
-    let token;
-
-    before(async () => {
-        //Obter o token
-        token = await getToken('admin@escola.com', 'admin123');
-    });
 
     it('Cadastrar disciplina', async () => {
           
         //Cadastrar disciplina
-        const cadastrarDisciplinaResposta = await request('http://localhost:3000')
+        const cadastrarDisciplinaResposta = await api()
               .post('/api/admin/disciplinas')
               .set('Content-type', 'application/json')
-              .set('Authorization', `Bearer ${token}`)
+              .set('Authorization', await comTokenDeAdmin())
               .send({
                 nome: "Algebra Linear",
                 codigo: "ALL666",
@@ -38,10 +32,10 @@ describe('Testes de Disciplinas', () => {
     it('Matricular aluno em disciplina', async () => {
           
         //Cadastrar aluno em disciplina disciplina
-        const cadastrarAlunoEmDisciplinaResposta = await request('http://localhost:3000')
+        const cadastrarAlunoEmDisciplinaResposta = await api()
               .post('/api/admin/disciplinas/disciplina-historia/matriculas')
               .set('Content-type', 'application/json')
-              .set('Authorization', `Bearer ${token}`)
+              .set('Authorization', await comTokenDeAdmin())
               .send({
                 alunoId: "aluno-ana-souza"
                 });
@@ -59,35 +53,35 @@ describe('Testes de Disciplinas', () => {
     it.only('Validar que um aluno recem cadastrado pode ser matriculado em uma nova disciplina', async () => {
     
         //cadastrar aluno
-        const cadastrarAlunoResposta = await request('http://localhost:3000')
+        const cadastrarAlunoResposta = await api()
             .post('/api/admin/alunos')
             .set('Content-type', 'application/json')
-            .set('Authorization', `Bearer ${token}`)
+            .set('Authorization', await comTokenDeAdmin())
             .send({
-                nome: 'Maria Teresinha',
-                email: 'maria.teresinha@example.com',
-                matricula: '2024086',
+                nome: 'Felipe Pensis',
+                email: 'felipe.pensis@example.com',
+                matricula: '2024091',
                 senha: '123456'
             });      
         const alunoId = cadastrarAlunoResposta.body.id;        
               
          //Cadastrar disciplina
-        const cadastrarDisciplinaResposta = await request('http://localhost:3000')
+        const cadastrarDisciplinaResposta = await api()
               .post('/api/admin/disciplinas')
               .set('Content-type', 'application/json')
-              .set('Authorization', `Bearer ${token}`)
+              .set('Authorization', await comTokenDeAdmin())
               .send({
-                nome: "Algebra Linear 9",
-                codigo: "ALL669",
+                nome: "Desenho Industrial",
+                codigo: "DESIN1",
                 cargaHoraria: 40
                 });
         const disciplinaId = cadastrarDisciplinaResposta.body.id;
         
         // Matricular aluno em disciplina
-        const matricularAlunoEmDisciplinaResposta = await request('http://localhost:3000')
+        const matricularAlunoEmDisciplinaResposta = await api()
               .post(`/api/admin/disciplinas/${disciplinaId}/matriculas`)
               .set('Content-type', 'application/json')
-              .set('Authorization', `Bearer ${token}`)
+              .set('Authorization', await comTokenDeAdmin())
               .send({
                 alunoId: alunoId
                 });

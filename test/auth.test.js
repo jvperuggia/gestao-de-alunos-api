@@ -11,7 +11,8 @@ describe('POST /api/auth/login', () => {
   it('deve retornar 200 e um token quando o admin informar e-mail e senha corretos', async () => {
     const resposta = await request(app)
       .post('/api/auth/login')
-      .send({ email: 'admin@escola.com', senha: 'admin123' });
+      .send({ email: process.env.ADMIN_EMAIL, 
+              senha: process.env.ADMIN_SENHA });
 
     expect(resposta.status).to.equal(200);
     expect(resposta.body).to.have.property('token');
