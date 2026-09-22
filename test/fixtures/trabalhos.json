@@ -1,0 +1,17 @@
+[
+    { 
+        "testTitle": "Validar que um aluno realiza a entrega de um trabalho",
+        "dadosAluno": {
+            "nome": "Joao Peruggia",
+            "email": "joao.victor@example.com",
+            "matricula": "5550123",
+            "senha": "123456"
+        },
+        "dadosDisciplina": {
+            "nome": "Automação de API",
+            "codigo": "AA2026",
+            "cargaHoraria": 30
+        },
+        "statusCodeEsperado": 201
+    }
+]    

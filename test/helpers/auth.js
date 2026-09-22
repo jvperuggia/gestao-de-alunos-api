@@ -22,11 +22,32 @@ export async function comTokenDeAdmin() {
       .set('Content-type', 'application/json')
       .send({ 
         email: process.env.ADMIN_EMAIL, 
-        senha: process.env.ADMIN_SENHA 
+        senha: process.env.ADMIN_SENHA
       });
     tokenEmCache = loginResposta.body.token;
   }
 
   return `Bearer ${tokenEmCache}`;
 }
+
+
+export async function comTokenDeAluno() {
+  if (!tokenEmCache) {
+    const loginResposta = await api()
+      .post('/api/auth/login')
+      .set('Content-type', 'application/json')
+      .send({ 
+        email: process.env.ALUNO_EMAIL, 
+        senha: process.env.ALUNO_SENHA 
+      });
+    tokenEmCache = loginResposta.body.token;
+  }
+
+  return `Bearer ${tokenEmCache}`;
+}
+
+
+
+
+
 
