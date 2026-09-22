@@ -1,13 +1,7 @@
 import {api} from '../helpers/api.js';
 import { expect } from 'chai';
-import { comTokenDeAdmin } from '../helpers/auth.js';
-import { comTokenDeAluno } from '../helpers/auth.js';
-import { novoAluno } from '../factories/alunosFactory.js';  
-import { novaDisciplina } from '../factories/disciplinasFactory.js';    
+import { comTokenDeAluno } from '../helpers/auth.js';  
 import { novoTrabalho } from '../factories/trabalhosFactory.js';
-//import testesDeMatriculas from '../fixtures/matriculas.json'with {type: 'json'};   
-
-
 
 
 describe('Testes do Trabalho Final - Perfil Aluno', () => {
@@ -19,7 +13,6 @@ describe('Testes do Trabalho Final - Perfil Aluno', () => {
         .send({ email: 'ana.souza@example.com', senha: '123456' });
         expect(resposta.status).to.equal(200);
 
-        const token = resposta.body.token;
         //entregar trabalho
             const cadastrarTrabalhoResposta = await api()
              .post('/api/alunos/aluno-ana-souza/trabalhos')
