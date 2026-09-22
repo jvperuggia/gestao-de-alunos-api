@@ -9,7 +9,6 @@ import { novoTrabalho } from '../factories/trabalhosFactory.js';
 
 describe('Testes do Trabalho Final - Perfil Admin/Aluno', () => {
 
-
     it('Validar que um aluno recem cadastrado pode ser matriculado em uma nova disciplina, se logar e realizar a entrega de um trabalho.', async () => {
     //Logar com admin
         const resposta = await api()
